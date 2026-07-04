@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WE-CARE- Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6F2;
+  --surface:#FFFFFF;
+  --ink:#0F221D;
+  --ink-soft:#54655F;
+  --ink-faint:#8B978F;
+  --primary:#125A4D;
+  --primary-dark:#0A392F;
+  --primary-tint:#E4EFE9;
+  --gold:#E0A63B;
+  --gold-tint:#FBF0DA;
+  --red:#C3432B;
+  --red-tint:#F7E4DF;
+  --line:#E1E7E1;
+  --radius:18px;
+  --shadow:0 20px 50px -20px rgba(10,40,32,.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  font-family:'Inter',sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  padding:40px 16px 80px;
+}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;}
+
+/* ---------- PAGE HEADER ---------- */
+.pageHeader{max-width:1180px;margin:0 auto 34px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+.brandMark{display:flex;align-items:center;gap:10px;}
+.brandMark .word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;letter-spacing:0.02em;color:var(--primary-dark);}
+.brandMark .word span{color:var(--gold);}
+.pageHeader p.sub{color:var(--ink-soft);font-size:14.5px;max-width:480px;line-height:1.5;margin:0;}
+
+.switcher{
+  display:inline-flex;background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:4px;gap:4px;box-shadow:0 1px 0 rgba(15,34,29,.02);
+}
+.switcher button{
+  border:none;background:transparent;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:13.5px;padding:10px 20px;border-radius:999px;cursor:pointer;color:var(--ink-soft);
+  transition:all .25s ease;letter-spacing:.01em;
+}
+.switcher button.active{background:var(--primary);color:#fff;}
+
+/* ---------- LAYOUT ---------- */
+.stage{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:start;}
+@media(max-width:880px){.stage{grid-template-columns:1fr;justify-items:center;}}
+
+/* ---------- SIDE INFO ---------- */
+.sideCard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:sticky;top:24px;}
+.sideCard h3{margin:0 0 4px;font-size:15px;}
+.sideCard .tag{display:inline-block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);background:var(--primary-tint);padding:3px 9px;border-radius:6px;margin-bottom:10px;font-weight:600;}
+.flowList{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:2px;}
+.flowList li{
+  font-size:13px;color:var(--ink-soft);padding:9px 10px;border-radius:10px;cursor:pointer;
+  display:flex;align-items:center;gap:9px;transition:background .15s ease;
+}
+.flowList li:hover{background:var(--bg);}
+.flowList li.on{background:var(--primary-tint);color:var(--primary-dark);font-weight:600;}
+.flowList li .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-faint);flex:none;}
+.flowList li.on .dot{background:var(--primary);}
+@media(max-width:880px){.sideCard{width:100%;max-width:375px;position:static;}}
+
+/* ---------- PHONE ---------- */
+.phoneWrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.phone{
+  width:375px;height:790px;background:var(--surface);border-radius:44px;
+  border:10px solid var(--primary-dark);box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:26px;
+  background:var(--primary-dark);border-radius:0 0 16px 16px;z-index:50;
+}
+.statusbar{
+  height:46px;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 24px 8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
+  position:relative;z-index:10;color:var(--ink);
+}
+.pulseline{height:14px;overflow:hidden;padding:0 0 10px;}
+.pulseline svg{width:100%;display:block;}
+
+.screenArea{position:absolute;top:70px;left:0;right:0;bottom:0;}
+.screen{
+  position:absolute;inset:0;overflow-y:auto;padding:0 20px 90px;
+  opacity:0;pointer-events:none;transform:translateX(8px);transition:opacity .22s ease, transform .22s ease;
+}
+.screen.show{opacity:1;pointer-events:auto;transform:translateX(0);}
+.screen::-webkit-scrollbar{width:0;}
+
+/* topbar inside screens */
+.scr-top{display:flex;align-items:center;gap:10px;padding:6px 0 16px;position:sticky;top:0;background:var(--surface);z-index:5;}
+.scr-top h2{font-size:17px;margin:0;font-weight:600;}
+.iconbtn{width:34px;height:34px;border-radius:10px;background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--line);flex:none;}
+.iconbtn:hover{background:var(--primary-tint);}
+
+/* buttons */
+.btn{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:14px;
+  padding:14px 18px;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .12s ease, opacity .15s ease;
+}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:var(--primary-dark);}
+.btn-ghost{background:var(--surface);color:var(--primary-dark);border:1.5px solid var(--primary);}
+.btn-gold{background:var(--gold);color:var(--primary-dark);}
+.btn-line{background:transparent;color:var(--ink-soft);border:1.5px solid var(--line);}
+.btn-danger{background:var(--red-tint);color:var(--red);}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn-sm{padding:9px 14px;font-size:12.5px;width:auto;}
+
+/* form */
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:11.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;}
+.field input,.field select,.field textarea{
+  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;font-family:'Inter',sans-serif;
+  font-size:13.5px;color:var(--ink);background:var(--bg);outline:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);background:#fff;}
+.field.file{border:1.5px dashed var(--line);border-radius:12px;padding:14px;background:var(--bg);display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-soft);}
+.field textarea{resize:none;min-height:64px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* logo hero */
+.heroLogo{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:26px;padding-top:40px;}
+.logoMark{width:104px;height:104px;}
+.heroLogo .name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:var(--primary-dark);letter-spacing:.01em;}
+.heroLogo .name span{color:var(--gold);}
+.heroLogo .tag{font-size:12.5px;color:var(--ink-soft);margin-top:-16px;letter-spacing:.03em;}
+.heroBtns{width:100%;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;}
+.searchbar{display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:16px;}
+.searchbar input{border:none;background:transparent;outline:none;font-size:13.5px;flex:1;font-family:'Inter',sans-serif;}
+.sectionLabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:700;margin:18px 0 10px;}
+
+.docRow{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:9px;cursor:pointer;background:#fff;}
+.docRow:hover{border-color:var(--primary);}
+.avatar{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:15px;flex:none;}
+.docRow .info{flex:1;min-width:0;}
+.docRow .info .n{font-size:13.5px;font-weight:600;}
+.docRow .info .m{font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
+.dist{font-size:11px;color:var(--primary);font-weight:700;background:var(--primary-tint);padding:3px 8px;border-radius:8px;flex:none;}
+
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:600;color:var(--ink-soft);cursor:pointer;margin:0 6px 8px 0;}
+.chip:hover{border-color:var(--primary);color:var(--primary-dark);}
+
+/* profile */
+.profHead{display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 0 6px;}
+.profHead .avatar{width:88px;height:88px;font-size:26px;border-radius:22px;margin-bottom:12px;}
+.profHead h3{margin:0;font-size:17px;}
+.profHead .spec{color:var(--ink-soft);font-size:12.5px;margin-top:2px;}
+.stars{display:flex;gap:3px;margin:10px 0 2px;}
+.stars svg{width:18px;height:18px;}
+.statRow{display:flex;gap:10px;margin:14px 0;}
+.statBox{flex:1;background:var(--bg);border-radius:12px;padding:10px;text-align:center;}
+.statBox .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;}
+.statBox .l{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.hospItem{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px;}
+.hospItem:last-child{border-bottom:none;}
+.review{padding:11px 0;border-bottom:1px solid var(--line);}
+.review:last-child{border-bottom:none;}
+.review .rn{font-size:12.5px;font-weight:600;}
+.review .rt{font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.45;}
+
+/* chat */
+.chatArea{display:flex;flex-direction:column;gap:10px;padding-top:4px;}
+.bubble{max-width:78%;padding:11px 14px;border-radius:16px;font-size:13px;line-height:1.4;}
+.bubble.me{align-self:flex-end;background:var(--primary);color:#fff;border-bottom-right-radius:5px;}
+.bubble.them{align-self:flex-start;background:var(--bg);color:var(--ink);border-bottom-left-radius:5px;}
+.bubble.sys{align-self:center;background:var(--gold-tint);color:#8a5a12;font-size:11.5px;font-weight:600;border-radius:10px;padding:7px 12px;}
+.chatInputBar{position:absolute;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 20px 18px;display:flex;gap:8px;align-items:center;}
+.chatInputBar input{flex:1;border:1.5px solid var(--line);border-radius:999px;padding:11px 15px;font-size:13px;outline:none;background:var(--bg);font-family:'Inter',sans-serif;}
+.sendbtn{width:40px;height:40px;border-radius:50%;background:var(--primary);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;}
+.videoRow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;}
+.videoRow .l{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;}
+.lockDot{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--red-tint);color:var(--red);flex:none;}
+.lockDot.unlocked{background:var(--primary-tint);color:var(--primary);}
+
+/* history / prescription */
+.histCard{display:flex;gap:12px;padding:13px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;}
+.histCard .d{width:44px;text-align:center;flex:none;}
+.histCard .d .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;}
+.histCard .d .mo{font-size:9.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;}
+.histCard .b .n{font-size:13px;font-weight:600;}
+.histCard .b .m{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+.badge{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:3px 8px;border-radius:7px;background:var(--primary-tint);color:var(--primary-dark);margin-top:6px;display:inline-block;}
+.pdfCard{border:1.5px dashed var(--line);border-radius:16px;padding:22px 16px;text-align:center;background:var(--bg);}
+.pdfIcon{width:56px;height:56px;margin:0 auto 12px;background:var(--red-tint);color:var(--red);border-radius:16px;display:flex;align-items:center;justify-content:center;}
+.pdfCard .fn{font-size:12px;font-weight:600;word-break:break-all;margin-bottom:14px;}
+
+.reqRow{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:9px;}
+.reqRow .top{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
+.reqRow .top .n{font-size:13px;font-weight:600;}
+.reqRow .top .m{font-size:11px;color:var(--ink-soft);}
+.reqBtns{display:flex;gap:8px;}
+
+/* bottom tab */
+.tabbar{
+  position:absolute;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);
+  display:flex;padding:10px 6px 20px;z-index:20;
+}
+.tabbar button{
+  flex:1;background:transparent;border:none;display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;color:var(--ink-faint);font-size:9.5px;font-family:'Space Grotesk',sans-serif;font-weight:600;padding:4px 0;
+}
+.tabbar button.on{color:var(--primary);}
+.tabbar svg{width:20px;height:20px;}
+
+.support247{display:flex;align-items:center;gap:8px;justify-content:center;background:var(--primary-tint);color:var(--primary-dark);border-radius:12px;padding:9px;font-size:11.5px;font-weight:700;margin-bottom:14px;}
+
+.hint{font-size:11.5px;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+.divider{height:1px;background:var(--line);margin:16px 0;}
+.linkline{display:flex;justify-content:center;gap:5px;font-size:12.5px;color:var(--ink-soft);margin-top:14px;}
+.linkline a{color:var(--primary);font-weight:600;text-decoration:none;cursor:pointer;}
+
+/* toast */
+.toast{
+  position:absolute;left:20px;right:20px;bottom:100px;background:var(--primary-dark);color:#fff;
+  padding:13px 16px;border-radius:14px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:9px;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:all .3s ease;z-index:60;
+}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* menu overlay (hamburger) */
+.overlay{position:absolute;inset:0;background:rgba(10,32,26,.42);z-index:80;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+.overlay.show{opacity:1;pointer-events:auto;}
+.drawer{
+  position:absolute;top:0;left:0;bottom:0;width:78%;background:#fff;padding:70px 20px 20px;
+  transform:translateX(-100%);transition:transform .28s ease;overflow-y:auto;
+}
+.overlay.show .drawer{transform:translateX(0);}
+.drawer h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin:0 0 12px;}
+.specItem{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:12px;cursor:pointer;font-size:13.5px;font-weight:600;}
+.specItem:hover{background:var(--bg);}
+.specIcon{width:36px;height:36px;border-radius:10px;background:var(--primary-tint);color:var(--primary);display:flex;align-items:center;justify-content:center;flex:none;}
+
+@media(max-width:420px){.phone{width:100%;max-width:375px;height:80vh;min-height:640px;}}
+</style>
+</head>
+<body>
+
+<div class="pageHeader">
+  <div class="brandMark">
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="10" fill="#125A4D"/>
+      <path d="M20 9v22M11 15h18" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M14 13c2 2 2 4 0 6s-2 4 0 6 2 4 0 6" stroke="#E0A63B" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    </svg>
+    <div class="word">WE-CARE<span>.</span></div>
+  </div>
+  <p class="sub">Maquette interactive — application <strong>Patient</strong> et application <strong>Médecin</strong>. Cliquez dans l'écran du téléphone pour naviguer entre les pages, exactement comme dans l'app finale.</p>
+  <div class="switcher">
+    <button id="sw-patient" class="active" onclick="switchApp('patient')">Application Patient</button>
+    <button id="sw-medecin" onclick="switchApp('medecin')">Application Médecin</button>
+  </div>
+</div>
+
+<div class="stage">
+  <!-- SIDE NAV -->
+  <div class="sideCard" id="sideNavPatient">
+    <span class="tag">Patient</span>
+    <h3>Parcours de l'écran</h3>
+    <ul class="flowList" id="flowPatient"></ul>
+  </div>
+  <div class="sideCard" id="sideNavMedecin" style="display:none;">
+    <span class="tag">Médecin</span>
+    <h3>Parcours de l'écran</h3>
+    <ul class="flowList" id="flowMedecin"></ul>
+  </div>
+
+  <!-- PHONE -->
+  <div class="phoneWrap">
+    <div class="phone" id="phone">
+      <div class="notch"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <span style="display:flex;gap:5px;align-items:center;">
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect x="0" y="6" width="2.4" height="5" rx="1" fill="#0F221D"/><rect x="4" y="4" width="2.4" height="7" rx="1" fill="#0F221D"/><rect x="8" y="1.5" width="2.4" height="9.5" rx="1" fill="#0F221D"/><rect x="12" y="0" width="2.4" height="11" rx="1" fill="#0F221D"/></svg>
+          <svg width="18" height="11" viewBox="0 0 18 11" fill="none"><rect x=".5" y=".5" width="15" height="10" rx="2.5" stroke="#0F221D"/><rect x="2" y="2" width="12" height="7" rx="1.2" fill="#0F221D"/><rect x="16" y="3.3" width="1.6" height="4.4" rx="0.8" fill="#0F221D"/></svg>
+        </span>
+      </div>
+      <div class="pulseline">
+        <svg viewBox="0 0 375 14" preserveAspectRatio="none"><path d="M0 7 H130 L140 2 L150 12 L160 7 H220 L228 -1 L236 14 L244 7 H375" stroke="#E0A63B" stroke-width="1.4" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="screenArea" id="screenArea"></div>
+      <div class="toast" id="toast"></div>
+    </div>
+    <div class="hint" id="screenCaption">Écran actuel — Accueil</div>
+  </div>
+</div>
+
+<script>
+/* ---------------- ICONS ---------------- */
+const I = {
+  home:`<path d="M4 11.5L12 4l8 7.5M6 10v9h5v-5h2v5h5v-9" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  search:`<circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M20 20l-4.8-4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>`,
+  clock:`<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  file:`<path d="M6 3h8l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/>`,
+  headset:`<path d="M4 13v-1a8 8 0 0116 0v1" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/><rect x="3" y="13" width="4" height="6" rx="1.5" stroke="currentColor" stroke-width="1.7" fill="none"/><rect x="17" y="13" width="4" height="6" rx="1.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M19 19v1a3 3 0 01-3 3h-2" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>`,
+  menu:`<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  back:`<path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  starF:`<path d="M12 2l3 6.2 6.8.9-5 4.7 1.3 6.7L12 17l-6.1 3.5L7.2 13.9l-5-4.7 6.8-.9L12 2z" fill="#E0A63B"/>`,
+  starE:`<path d="M12 2l3 6.2 6.8.9-5 4.7 1.3 6.7L12 17l-6.1 3.5L7.2 13.9l-5-4.7 6.8-.9L12 2z" fill="none" stroke="#D8DCD5" stroke-width="1.4"/>`,
+  lock:`<rect x="5" y="10" width="14" height="9" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>`,
+  unlock:`<rect x="5" y="10" width="14" height="9" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M8 10V7a4 4 0 017.6-1.8" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>`,
+  video:`<rect x="3" y="6" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M15 10.5l6-3.3v9.6l-6-3.3" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/>`,
+  send:`<path d="M4 12L20 4l-6.5 16-3-6.5L4 12z" fill="#fff"/>`,
+  check:`<path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  x:`<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  download:`<path d="M12 3v13m0 0l-5-5m5 5l5-5M4 20h16" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  pin:`<path d="M12 21s7-6.2 7-11.5A7 7 0 105 9.5C5 14.8 12 21 12 21z" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.6" fill="none"/>`,
+  paperclip:`<path d="M16.5 6.5l-8 8a3 3 0 004.2 4.2l8-8a5 5 0 00-7.1-7.1l-8 8a7 7 0 009.9 9.9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+  stetho:`<path d="M6 4v6a5 5 0 0010 0V4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="18.5" cy="15" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M11 14a3 3 0 006 0v-2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6 4a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" fill="currentColor"/>`,
+};
+const svg=(name,size=18)=>`<svg width="${size}" height="${size}" viewBox="0 0 24 24">${I[name]}</svg>`;
+
+const AVA_COLORS=['#125A4D','#C3432B','#E0A63B','#3B6EA8','#7A4FA0'];
+const initialsAvatar=(name,size=46,radius=12,fs=15)=>{
+  const parts=name.replace('Dr. ','').split(' ');
+  const ini=(parts[0][0]+(parts[1]?parts[1][0]:'')).toUpperCase();
+  const c=AVA_COLORS[name.length%AVA_COLORS.length];
+  return `<div class="avatar" style="width:${size}px;height:${size}px;border-radius:${radius}px;font-size:${fs}px;background:${c};">${ini}</div>`;
+};
+
+/* ---------------- DATA ---------------- */
+const SPECIALTIES=[
+  {n:'Médecin généraliste',i:'stetho'},{n:'Cardiologue',i:'stetho'},{n:'Gynécologue',i:'stetho'},
+  {n:'Pédiatre',i:'stetho'},{n:'Dermatologue',i:'stetho'},{n:'Dentiste',i:'stetho'},
+  {n:'Ophtalmologue',i:'stetho'},{n:'Psychiatre',i:'stetho'}
+];
+const DOCTORS=[
+  {name:'Dr. Marielle Fotso',spec:'Cardiologue',city:'Bonapriso, Douala',dist:'1.2 km',exp:'12 ans',
+   hosp:['Hôpital Général de Douala','Clinique de l’Aéroport','Polyclinique Bonanjo'],
+   reviews:[{n:'Estelle N.',t:'Très à l’écoute, diagnostic rapide et précis.'},{n:'Paul K.',t:'Consultation vidéo fluide, ordonnance reçue le jour même.'}]},
+  {name:'Dr. Jean-Paul Eyenga',spec:'Cardiologue',city:'Akwa, Douala',dist:'2.5 km',exp:'8 ans',
+   hosp:['Hôpital Laquintinie','Clinique des Cocotiers'],
+   reviews:[{n:'Sandrine A.',t:'Explications claires, très professionnel.'}]},
+  {name:'Dr. Amina Njoya',spec:'Cardiologue',city:'Bonanjo, Douala',dist:'3.8 km',exp:'15 ans',
+   hosp:['Hôpital Général de Douala'],
+   reviews:[{n:'Hervé T.',t:'Suivi régulier, toujours disponible sur le chat.'}]},
+];
+let currentDoctor = DOCTORS[0];
+
+/* ---------------- STATE ---------------- */
+let app='patient';
+let stacks={patient:['p-accueil'],medecin:['m-accueil']};
+let paymentDone=false;
+
+const PATIENT_FLOW=[
+  ['p-accueil','Accueil'],['p-inscription','Inscription'],['p-connexion','Connexion'],
+  ['p-home','Page utilisateur'],['p-liste','Liste médecins'],['p-profil','Profil médecin'],
+  ['p-chatbot','Chatbot & appel'],['p-ia','Orientation IA'],['p-historique','Historique'],
+  ['p-ordonnance','Ordonnance'],['p-support','Service client'],
+];
+const MEDECIN_FLOW=[
+  ['m-accueil','Accueil'],['m-inscription','Inscription'],['m-connexion','Connexion'],
+  ['m-dashboard','Tableau de bord'],['m-chatbot','Chat & module ordonnance'],['m-ordform','Rédiger ordonnance'],
+];
+
+function buildFlow(listId,flow){
+  const ul=document.getElementById(listId);
+  ul.innerHTML=flow.map(([id,label])=>`<li data-id="${id}" onclick="nav('${id}',true)"><span class="dot"></span>${label}</li>`).join('');
+}
+buildFlow('flowPatient',PATIENT_FLOW);
+buildFlow('flowMedecin',MEDECIN_FLOW);
+
+function switchApp(a){
+  app=a;
+  document.getElementById('sw-patient').classList.toggle('active',a==='patient');
+  document.getElementById('sw-medecin').classList.toggle('active',a==='medecin');
+  document.getElementById('sideNavPatient').style.display=a==='patient'?'block':'none';
+  document.getElementById('sideNavMedecin').style.display=a==='medecin'?'block':'none';
+  render();
+  nav(stacks[app][stacks[app].length-1],false,true);
+}
+
+function nav(id,reset=false,silent=false){
+  if(reset){ stacks[app]=[id]; } else if(stacks[app][stacks[app].length-1]!==id){ stacks[app].push(id); }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('show');
+  document.querySelectorAll('.flowList li').forEach(li=>li.classList.toggle('on',li.dataset.id===id));
+  const flow=(app==='patient')?PATIENT_FLOW:MEDECIN_FLOW;
+  const found=flow.find(f=>f[0]===id);
+  document.getElementById('screenCaption').textContent='Écran actuel — '+(found?found[1]:'');
+  document.getElementById('screenArea').scrollTop=0;
+  const active=document.getElementById(id);
+  if(active) active.scrollTop=0;
+}
+function back(){
+  const st=stacks[app];
+  if(st.length>1){ st.pop(); const id=st[st.length-1]; nav(id,true); }
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML=`${svg('check',16)}<span>${msg}</span>`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+function toggleMenu(show){
+  document.getElementById('menuOverlay').classList.toggle('show',show);
+}
+function selectSpecialty(name){
+  document.getElementById('listTitle').textContent=name;
+  toggleMenu(false);
+  nav('p-liste',true);
+}
+function openDoctor(idx){
+  currentDoctor=DOCTORS[idx];
+  renderProfile();
+  nav('p-profil');
+}
+function startConsult(){
+  nav('p-chatbot');
+  paymentDone=false;
+  document.getElementById('payBtn').style.display='block';
+  document.getElementById('paidMsg').style.display='none';
+  document.getElementById('videoLock').className='lockDot';
+  document.getElementById('videoLock').innerHTML=svg('lock',16);
+  document.getElementById('videoLabel').textContent='Verrouillé — payez pour débloquer';
+}
+function payConsult(){
+  paymentDone=true;
+  document.getElementById('payBtn').style.display='none';
+  document.getElementById('paidMsg').style.display='flex';
+  document.getElementById('videoLock').className='lockDot unlocked';
+  document.getElementById('videoLock').innerHTML=svg('unlock',16);
+  document.getElementById('videoLabel').textContent='Débloqué — appel disponible';
+  toast('Paiement de 10 000 FCFA reçu');
+}
+function tryVideo(){
+  if(!paymentDone){ toast('Payez la consultation pour activer l’appel vidéo'); return; }
+  toast('Appel vidéo démarré…');
+}
+function askIA(){
+  document.getElementById('iaThread').innerHTML+=`
+    <div class="bubble me">J'ai des maux de tête et de la fièvre depuis 2 jours</div>
+    <div class="bubble them">D'après vos symptômes, je vous recommande de consulter un <strong>Médecin généraliste</strong>. Voulez-vous voir la liste des médecins disponibles ?</div>`;
+  document.getElementById('iaBtnWrap').style.display='block';
+}
+function acceptReq(btn){
+  const row=btn.closest('.reqRow');
+  row.innerHTML=`<div style="display:flex;align-items:center;gap:8px;color:var(--primary);font-size:12.5px;font-weight:700;">${svg('check',16)} Patient ajouté à votre suivi</div>`;
+}
+function declineReq(btn){
+  const row=btn.closest('.reqRow');
+  row.style.opacity='.4';
+  row.querySelector('.reqBtns').innerHTML=`<span style="font-size:11.5px;color:var(--ink-faint);">Demande déclinée</span>`;
+}
+function submitOrdo(e){
+  e.preventDefault();
+  toast('Ordonnance PDF envoyée au patient ✓');
+  setTimeout(()=>nav('m-dashboard',true),900);
+}
+
+/* ---------------- SCREENS ---------------- */
+function render(){
+  const area=document.getElementById('screenArea');
+  area.innerHTML = app==='patient' ? patientScreens() : medecinScreens();
+}
+
+function logoSVG(size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" class="logoMark">
+    <rect width="100" height="100" rx="24" fill="#125A4D"/>
+    <path d="M50 20v60M28 40h44" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+    <path d="M36 30c5 5 5 10 0 15s-5 10 0 15 5 10 0 15" stroke="#E0A63B" stroke-width="4" stroke-linecap="round" fill="none"/>
+  </svg>`;
+}
+
+function patientScreens(){ return `
+
+<div id="p-accueil" class="screen show">
+  <div class="heroLogo">
+    ${logoSVG(96)}
+    <div style="text-align:center;">
+      <div class="name">WE-CARE<span>.</span></div>
+      <div class="tag">La pharmacie et vos médecins, réunis</div>
+    </div>
+    <div class="heroBtns">
+      <button class="btn btn-primary" onclick="nav('p-inscription',true)">S'inscrire</button>
+      <button class="btn btn-ghost" onclick="nav('p-connexion',true)">se connecter</button>
+    </div>
+  </div>
+</div>
+
+<div id="p-inscription" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-accueil',true)">${svg('back',18)}</div><h2>Inscription patient</h2></div>
+  <div class="field"><label>Nom et prénom</label><input placeholder="Ex. Alexandra Mballa"></div>
+  <div class="grid2">
+    <div class="field"><label>Date de naissance</label><input type="date"></div>
+    <div class="field"><label>Sexe</label><select><option>Femme</option><option>Homme</option></select></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>Ville</label><input placeholder="Douala"></div>
+    <div class="field"><label>Quartier</label><input placeholder="Bonapriso"></div>
+  </div>
+  <div class="field"><label>Adresse e-mail</label><input type="email" placeholder="vous@email.com"></div>
+  <div class="field"><label>Numéro de téléphone</label><input placeholder="6XX XX XX XX"></div>
+  <div class="field"><label>Numéro CNI</label><input placeholder="123456789"></div>
+  <div class="field"><label>Carte bancaire / Mobile Money</label><input placeholder="Orange Money ou MTN MoMo"></div>
+  <button class="btn btn-primary" style="margin-top:6px;" onclick="nav('p-home',true)">Créer mon compte</button>
+  <div class="linkline">Déjà inscrit ? <a onclick="nav('p-connexion',true)">se connecter</a></div>
+</div>
+
+<div id="p-connexion" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-accueil',true)">${svg('back',18)}</div><h2>Connexion</h2></div>
+  <div class="field"><label>Nom et prénom</label><input placeholder="Ex. Alexandra Mballa"></div>
+  <div class="field"><label>Numéro de téléphone</label><input placeholder="6XX XX XX XX"></div>
+  <div class="field"><label>Adresse e-mail</label><input type="email" placeholder="vous@email.com"></div>
+  <button class="btn btn-primary" style="margin-top:6px;" onclick="nav('p-home',true)">se connecter</button>
+  <div class="linkline">Pas encore de compte ? <a onclick="nav('p-inscription',true)">s'inscrire</a></div>
+</div>
+
+<div id="p-home" class="screen">
+  <div class="scr-top">
+    <div class="iconbtn" onclick="toggleMenu(true)">${svg('menu',18)}</div>
+    <h2>Bonjour, Alexandra</h2>
+  </div>
+  <div class="searchbar">${svg('search',16)}<input placeholder="Rechercher un médecin ou une spécialité"></div>
+  <div class="sectionLabel">Spécialités</div>
+  <div>
+    ${SPECIALTIES.slice(0,6).map(s=>`<span class="chip" onclick="selectSpecialty('${s.n}')">${svg('stetho',14)} ${s.n}</span>`).join('')}
+  </div>
+  <div class="sectionLabel">Suggestions près de vous</div>
+  ${DOCTORS.map((d,i)=>`
+    <div class="docRow" onclick="openDoctor(${i})">
+      ${initialsAvatar(d.name)}
+      <div class="info"><div class="n">${d.name}</div><div class="m">${svg('pin',12)} ${d.city}</div></div>
+      <span class="dist">${d.dist}</span>
+    </div>`).join('')}
+  <div class="tabbar">
+    <button class="on" onclick="nav('p-home',true)">${svg('home')}Accueil</button>
+    <button onclick="toggleMenu(true)">${svg('search')}Recherche</button>
+    <button onclick="nav('p-historique',true)">${svg('clock')}Historique</button>
+    <button onclick="nav('p-ordonnance',true)">${svg('file')}Ordonnance</button>
+    <button onclick="nav('p-support',true)">${svg('headset')}Support</button>
+  </div>
+</div>
+
+<div id="p-liste" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-home',true)">${svg('back',18)}</div><h2 id="listTitle">Cardiologue</h2></div>
+  <div class="sectionLabel">Du plus proche au plus éloigné</div>
+  ${DOCTORS.map((d,i)=>`
+    <div class="docRow" onclick="openDoctor(${i})">
+      ${initialsAvatar(d.name)}
+      <div class="info"><div class="n">${d.name}</div><div class="m">${svg('pin',12)} ${d.city}</div></div>
+      <span class="dist">${d.dist}</span>
+    </div>`).join('')}
+</div>
+
+<div id="p-profil" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-liste',true)">${svg('back',18)}</div><h2>Profil médecin</h2></div>
+  <div id="profileBody"></div>
+</div>
+
+<div id="p-chatbot" class="screen" style="padding-bottom:80px;">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-profil',true)">${svg('back',18)}</div><h2 id="chatDocName">Dr. Marielle Fotso</h2></div>
+  <div class="videoRow">
+    <div class="l"><span id="videoLock" class="lockDot">${svg('lock',16)}</span><span id="videoLabel">Verrouillé — payez pour débloquer</span></div>
+    <div class="iconbtn" onclick="tryVideo()">${svg('video',18)}</div>
+  </div>
+  <div class="chatArea">
+    <div class="bubble sys">Aujourd’hui</div>
+    <div class="bubble me">Docteur, je voudrais me faire consulter</div>
+    <div class="bubble them">Bonjour, la consultation est facturée à <strong>10 000 FCFA</strong>. Veuillez procéder au paiement pour débloquer l’appel vidéo.</div>
+    <button id="payBtn" class="btn btn-gold" style="margin-top:4px;" onclick="payConsult()">Payer 10 000 FCFA</button>
+    <div id="paidMsg" class="bubble them" style="display:none;">${svg('check',14)} Paiement reçu. Vous pouvez démarrer l’appel vidéo quand vous êtes prêt.</div>
+  </div>
+  <div class="chatInputBar">
+    <input placeholder="Écrire un message…">
+    <button class="sendbtn">${svg('send',16)}</button>
+  </div>
+</div>
+
+<div id="p-ia" class="screen" style="padding-bottom:80px;">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-home',true)">${svg('back',18)}</div><h2>Orientation IA</h2></div>
+  <div class="bubble sys" style="align-self:auto;margin-bottom:12px;">Décrivez vos symptômes, l’IA vous oriente vers le bon spécialiste</div>
+  <div class="chatArea" id="iaThread">
+    <div class="bubble them">Bonjour, je suis l’assistant d’orientation Konsulta. Quels symptômes ressentez-vous ?</div>
+  </div>
+  <div id="iaBtnWrap" style="display:none;margin-top:12px;">
+    <button class="btn btn-primary" onclick="nav('p-home',true)">Voir les médecins</button>
+  </div>
+  <div class="chatInputBar">
+    <input placeholder="Décrivez vos symptômes…">
+    <button class="sendbtn" onclick="askIA()">${svg('send',16)}</button>
+  </div>
+</div>
+
+<div id="p-historique" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-home',true)">${svg('back',18)}</div><h2>Historique</h2></div>
+  <div class="hint" style="text-align:left;margin:-4px 0 14px;">Visible uniquement par vous et le médecin qui vous suit.</div>
+  ${[['02','JUIL','Dr. Marielle Fotso','Consultation cardiologie · vidéo','Terminée'],
+     ['18','JUIN','Dr. Jean-Paul Eyenga','Contrôle de tension','Terminée'],
+     ['04','MAI','Dr. Amina Njoya','Première consultation','Terminée']]
+     .map(([n,mo,name,motif,st])=>`
+    <div class="histCard">
+      <div class="d"><div class="num">${n}</div><div class="mo">${mo}</div></div>
+      <div class="b"><div class="n">${name}</div><div class="m">${motif}</div><span class="badge">${st}</span></div>
+    </div>`).join('')}
+  <div class="tabbar">
+    <button onclick="nav('p-home',true)">${svg('home')}Accueil</button>
+    <button onclick="toggleMenu(true)">${svg('search')}Recherche</button>
+    <button class="on" onclick="nav('p-historique',true)">${svg('clock')}Historique</button>
+    <button onclick="nav('p-ordonnance',true)">${svg('file')}Ordonnance</button>
+    <button onclick="nav('p-support',true)">${svg('headset')}Support</button>
+  </div>
+</div>
+
+<div id="p-ordonnance" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-home',true)">${svg('back',18)}</div><h2>Ordonnance</h2></div>
+  <div class="pdfCard">
+    <div class="pdfIcon">${svg('file',26)}</div>
+    <div class="fn">Ordonnance_Fotso_02-07-2026.pdf</div>
+    <button class="btn btn-primary" onclick="toast('Téléchargement démarré')">${svg('download',16)} Télécharger le PDF</button>
+  </div>
+  <div class="hint">Disponible dès que votre médecin l’a validée.</div>
+  <div class="tabbar">
+    <button onclick="nav('p-home',true)">${svg('home')}Accueil</button>
+    <button onclick="toggleMenu(true)">${svg('search')}Recherche</button>
+    <button onclick="nav('p-historique',true)">${svg('clock')}Historique</button>
+    <button class="on" onclick="nav('p-ordonnance',true)">${svg('file')}Ordonnance</button>
+    <button onclick="nav('p-support',true)">${svg('headset')}Support</button>
+  </div>
+</div>
+
+<div id="p-support" class="screen" style="padding-bottom:80px;">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('p-home',true)">${svg('back',18)}</div><h2>Service client</h2></div>
+  <div class="support247">${svg('headset',15)} Assistance disponible 24H/24</div>
+  <div class="chatArea">
+    <div class="bubble them">Bonjour, je suis l’assistant Konsulta. Comment puis-je vous aider ?</div>
+  </div>
+  <div class="chatInputBar">
+    <input placeholder="Décrivez votre problème…">
+    <button class="sendbtn">${svg('send',16)}</button>
+  </div>
+  <div class="tabbar">
+    <button onclick="nav('p-home',true)">${svg('home')}Accueil</button>
+    <button onclick="toggleMenu(true)">${svg('search')}Recherche</button>
+    <button onclick="nav('p-historique',true)">${svg('clock')}Historique</button>
+    <button onclick="nav('p-ordonnance',true)">${svg('file')}Ordonnance</button>
+    <button class="on" onclick="nav('p-support',true)">${svg('headset')}Support</button>
+  </div>
+</div>
+
+<div class="overlay" id="menuOverlay">
+  <div class="drawer">
+    <div class="iconbtn" style="position:absolute;top:20px;right:20px;" onclick="toggleMenu(false)">${svg('x',16)}</div>
+    <h3>Spécialités médicales</h3>
+    ${SPECIALTIES.map(s=>`<div class="specItem" onclick="selectSpecialty('${s.n}')"><span class="specIcon">${svg('stetho',17)}</span>${s.n}</div>`).join('')}
+    <div class="divider"></div>
+    <div class="specItem" onclick="toggleMenu(false);nav('p-ia',true)"><span class="specIcon">${svg('search',17)}</span>Orientation IA</div>
+    <div class="specItem" onclick="toggleMenu(false);nav('p-support',true)"><span class="specIcon">${svg('headset',17)}</span>Service client</div>
+  </div>
+</div>
+`;}
+
+function medecinScreens(){ return `
+
+<div id="m-accueil" class="screen show">
+  <div class="heroLogo">
+    ${logoSVG(96)}
+    <div style="text-align:center;">
+      <div class="name">WE-CARE<span>.</span></div>
+      <div class="tag">Espace médecin</div>
+    </div>
+    <div class="heroBtns">
+      <button class="btn btn-primary" onclick="nav('m-inscription',true)">S'inscrire</button>
+      <button class="btn btn-ghost" onclick="nav('m-connexion',true)">se connecter</button>
+    </div>
+  </div>
+</div>
+
+<div id="m-inscription" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('m-accueil',true)">${svg('back',18)}</div><h2>Inscription médecin</h2></div>
+  <div class="field"><label>Nom et prénom</label><input placeholder="Ex. Dr. Marielle Fotso"></div>
+  <div class="grid2">
+    <div class="field"><label>Date de naissance</label><input type="date"></div>
+    <div class="field"><label>Sexe</label><select><option>Femme</option><option>Homme</option></select></div>
+  </div>
+  <div class="field"><label>Spécialisation</label><input placeholder="Ex. Gynécologue"></div>
+  <div class="grid2">
+    <div class="field"><label>Ville</label><input placeholder="Douala"></div>
+    <div class="field"><label>Quartier</label><input placeholder="Bonanjo"></div>
+  </div>
+  <div class="field"><label>Numéro de téléphone</label><input placeholder="6XX XX XX XX"></div>
+  <div class="field"><label>Matricule</label><input placeholder="MED-2026-XXXX"></div>
+  <div class="field"><label>Adresse e-mail</label><input type="email" placeholder="docteur@email.com"></div>
+  <div class="field"><label>Hôpital / clinique actuel</label><input placeholder="Ex. Hôpital Général de Douala"></div>
+  <div class="field"><label>Antécédents médicaux</label><textarea placeholder="Le cas échéant"></textarea></div>
+  <div class="field"><label>Numéro CNI</label><input placeholder="123456789"></div>
+  <div class="field"><label>Compte bancaire / Mobile Money</label><input placeholder="Orange Money ou MTN MoMo"></div>
+  <div class="sectionLabel">Pièces jointes (PDF)</div>
+  <div class="field file">${svg('paperclip',17)} Diplômes</div>
+  <div class="field file">${svg('paperclip',17)} Lettre de recommandation</div>
+  <div class="field file">${svg('paperclip',17)} Curriculum Vitae (CV)</div>
+  <button class="btn btn-primary" style="margin-top:6px;" onclick="nav('m-dashboard',true)">Envoyer ma candidature</button>
+  <div class="linkline">Déjà inscrit ? <a onclick="nav('m-connexion',true)">se connecter</a></div>
+</div>
+
+<div id="m-connexion" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('m-accueil',true)">${svg('back',18)}</div><h2>Connexion</h2></div>
+  <div class="field"><label>Nom et prénom</label><input placeholder="Ex. Dr. Marielle Fotso"></div>
+  <div class="field"><label>Numéro de téléphone</label><input placeholder="6XX XX XX XX"></div>
+  <div class="field"><label>Adresse e-mail</label><input type="email" placeholder="docteur@email.com"></div>
+  <div class="field"><label>Spécialisation</label><input placeholder="Ex. Gynécologue"></div>
+  <div class="field"><label>Matricule</label><input placeholder="MED-2026-XXXX"></div>
+  <button class="btn btn-primary" style="margin-top:6px;" onclick="nav('m-dashboard',true)">se connecter</button>
+  <div class="linkline">Pas encore de compte ? <a onclick="nav('m-inscription',true)">s'inscrire</a></div>
+</div>
+
+<div id="m-dashboard" class="screen">
+  <div class="scr-top"><h2>Tableau de bord</h2></div>
+  <div class="profHead" style="padding-top:0;">
+    ${initialsAvatar('Dr. Marielle Fotso',76,20,22)}
+    <h3 style="margin-top:10px;">Dr. Marielle Fotso</h3>
+    <div class="spec">Cardiologue · Bonapriso, Douala</div>
+    <div class="stars">${svg('starF',17)}${svg('starF',17)}${svg('starF',17)}${svg('starF',17)}${svg('starE',17)}</div>
+  </div>
+  <div class="statRow">
+    <div class="statBox"><div class="v">24</div><div class="l">Patients suivis</div></div>
+    <div class="statBox"><div class="v">4.0</div><div class="l">Note globale</div></div>
+    <div class="statBox"><div class="v">2</div><div class="l">Demandes</div></div>
+  </div>
+
+  <div class="sectionLabel">Demandes de suivi</div>
+  <div class="reqRow">
+    <div class="top">${initialsAvatar('Estelle Ngo',36,10,13)}<div><div class="n">Estelle Ngo</div><div class="m">Souhaite votre suivi</div></div></div>
+    <div class="reqBtns"><button class="btn btn-primary btn-sm" onclick="acceptReq(this)">Accepter</button><button class="btn btn-danger btn-sm" onclick="declineReq(this)">Décliner</button></div>
+  </div>
+  <div class="reqRow">
+    <div class="top">${initialsAvatar('Paul Kamga',36,10,13)}<div><div class="n">Paul Kamga</div><div class="m">Souhaite votre suivi</div></div></div>
+    <div class="reqBtns"><button class="btn btn-primary btn-sm" onclick="acceptReq(this)">Accepter</button><button class="btn btn-danger btn-sm" onclick="declineReq(this)">Décliner</button></div>
+  </div>
+
+  <div class="sectionLabel">Patients suivis</div>
+  <div class="docRow" onclick="nav('m-chatbot',true)">${initialsAvatar('Alexandra Mballa')}<div class="info"><div class="n">Alexandra Mballa</div><div class="m">Dernier échange · hier</div></div></div>
+  <div class="docRow" onclick="nav('m-chatbot',true)">${initialsAvatar('Hervé Tchoua')}<div class="info"><div class="n">Hervé Tchoua</div><div class="m">Dernier échange · 3 jours</div></div></div>
+
+  <div class="sectionLabel">Avis récents</div>
+  <div class="card"><div class="review"><div class="rn">Estelle N. — ${svg('starF',12)}${svg('starF',12)}${svg('starF',12)}${svg('starF',12)}</div><div class="rt">Très à l’écoute, diagnostic rapide et précis.</div></div>
+  <div class="review"><div class="rn">Paul K. — ${svg('starF',12)}${svg('starF',12)}${svg('starF',12)}${svg('starF',12)}${svg('starF',12)}</div><div class="rt">Consultation vidéo fluide, ordonnance reçue le jour même.</div></div></div>
+
+  <div class="tabbar">
+    <button class="on" onclick="nav('m-dashboard',true)">${svg('home')}Accueil</button>
+    <button onclick="nav('m-chatbot',true)">${svg('headset')}Messages</button>
+    <button onclick="nav('m-ordform',true)">${svg('file')}Ordonnance</button>
+  </div>
+</div>
+
+<div id="m-chatbot" class="screen" style="padding-bottom:80px;">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('m-dashboard',true)">${svg('back',18)}</div><h2>Alexandra Mballa</h2></div>
+  <div class="videoRow">
+    <div class="l"><span class="lockDot">${svg('lock',16)}</span><span>Le patient doit lancer l’appel</span></div>
+    <div class="iconbtn" style="opacity:.4;">${svg('video',18)}</div>
+  </div>
+  <div class="chatArea">
+    <div class="bubble them">Docteur, je voudrais me faire consulter</div>
+    <div class="bubble me">Bonjour, la consultation est facturée à 10 000 FCFA. Je vous recontacte dès réception du paiement.</div>
+    <div class="bubble sys">Paiement reçu ✓</div>
+  </div>
+  <button class="btn btn-gold" style="margin-top:14px;" onclick="nav('m-ordform',true)">${svg('file',16)} Faire une ordonnance</button>
+  <div class="chatInputBar">
+    <input placeholder="Écrire un message…">
+    <button class="sendbtn">${svg('send',16)}</button>
+  </div>
+</div>
+
+<div id="m-ordform" class="screen">
+  <div class="scr-top"><div class="iconbtn" onclick="nav('m-chatbot',true)">${svg('back',18)}</div><h2>Rédiger l'ordonnance</h2></div>
+  <div class="field"><label>Nom</label><input value="Mballa"></div>
+  <div class="field"><label>Prénom</label><input value="Alexandra"></div>
+  <div class="grid2">
+    <div class="field"><label>Âge</label><input placeholder="29 ans"></div>
+    <div class="field"><label>Sexe</label><select><option>Femme</option><option>Homme</option></select></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>Poids (kg)</label><input placeholder="62"></div>
+    <div class="field"><label>Taille (cm)</label><input placeholder="168"></div>
+  </div>
+  <div class="field"><label>Symptômes</label><textarea placeholder="Décrire les symptômes observés"></textarea></div>
+  <div class="field"><label>Médicaments à acheter</label><textarea placeholder="Nom, dosage, durée du traitement"></textarea></div>
+  <button class="btn btn-primary" onclick="submitOrdo(event)">Valider et envoyer au patient</button>
+  <div class="hint">L’ordonnance sera convertie en PDF et envoyée sur l’application du patient.</div>
+</div>
+`;}
+
+function renderProfile(){
+  const d=currentDoctor;
+  document.getElementById('profileBody').innerHTML=`
+    <div class="profHead">
+      ${initialsAvatar(d.name,88,22,26)}
+      <h3>${d.name}</h3>
+      <div class="spec">${d.spec} · ${d.city}</div>
+      <div class="stars">${svg('starF',18)}${svg('starF',18)}${svg('starF',18)}${svg('starF',18)}${svg('starE',18)}</div>
+    </div>
+    <div class="statRow">
+      <div class="statBox"><div class="v">${d.exp}</div><div class="l">Expérience</div></div>
+      <div class="statBox"><div class="v">4/5</div><div class="l">Note</div></div>
+      <div class="statBox"><div class="v">${d.dist}</div><div class="l">Distance</div></div>
+    </div>
+    <div class="sectionLabel">Hôpitaux & cliniques</div>
+    <div class="card">${d.hosp.map(h=>`<div class="hospItem">${svg('pin',14)} ${h}</div>`).join('')}</div>
+    <div class="sectionLabel">Avis des patients</div>
+    <div class="card">${d.reviews.map(r=>`<div class="review"><div class="rn">${r.n}</div><div class="rt">${r.t}</div></div>`).join('')}</div>
+    <button class="btn btn-primary" onclick="document.getElementById('chatDocName').textContent='${d.name}';startConsult()">Suivre</button>
+  `;
+}
+
+/* ---------------- INIT ---------------- */
+render();
+buildFlow('flowPatient',PATIENT_FLOW);
+buildFlow('flowMedecin',MEDECIN_FLOW);
+nav('p-accueil',true);
+setTimeout(()=>{ renderProfile(); },50);
+</script>
+</body>
+</html>
